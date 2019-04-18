@@ -1,0 +1,160 @@
+<div class="container" ng-controller="orderItemController">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Order Low Quantity Items
+            </div>
+            <div class="panel-body">
+                <br>
+                <br>
+                <div >
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="search" class=" col-lg-2 control-label" style="text-align:right">Search :</label>
+                            <div class="col-lg-3">
+                                <input type="month" class="form-control" ng-model="searchtext.eDate" id="search" placeholder="Enter Name">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="searchbyname" class=" col-lg-2 control-label" style="text-align:right">Search :</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="searchtext2.name" id="searchbyname" placeholder="Enter Name">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+                <div class="col-lg-12">
+
+
+                    <div class="drugTableScroll">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Drug ID</th>
+                                <th style="text-align: center">Category Name</th>
+                                <th style="text-align: center">Drug Name</th>
+                                <th style="text-align: center">Drug Type</th>
+                                <th style="text-align: center">Unit Price</th>
+                                <th style="text-align: center">Batch</th>
+                                <th style="text-align: center">Manufacture Date</th>
+                                <th style="text-align: center">Expire Date</th>
+                                <th style="text-align: center">Quantity</th>
+                                <th style="text-align: center">Order</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="db in drugBatchs | filter:searchtext| filter:searchtext2">
+                                <td>{{db.did}}</td>
+                                <td>{{db.category}}</td>
+                                <td>{{db.name}}</td>
+                                <td>{{db.type}}</td>
+                                <td>{{db.price}}</td>
+                                <td>{{db.batchId}}</td>
+                                <td>{{db.mDate | date :YYYY-MM-dd}}</td>
+                                <td>{{db.eDate | date:YYYY-MM-dd}}</td>
+                                <td>{{db.qty}}</td>
+                                <td><button class="btn btn-warning" data-toggle="modal" data-target="#ModalAddnewOrder" ng-click="Edit(db.did)">Place Order</button></td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+        </div>
+        <!--order items -->
+        <div class="modal fade" id="ModalAddnewOrder" role="dialog" >
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Order Low Quantity Items</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" name="orderItemForm" ng-submit="addOrder(newOrder)" novalidate>
+
+
+
+                            <div class="form-group">
+                                <label for="DID1" class="col-lg-3 control-label" style="text-align: right"> Drug ID :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DID1" placeholder="Enter Drug ID"  ng-model="newOrder.did" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DCate1" class="col-lg-3 control-label" style="text-align: right"> Drug Category :</label>
+                                <div class="col-lg-6">
+                                    <input  type="text" class="form-control" id="DCate1"  ng-model="newOrder.category" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DName1" class="col-lg-3 control-label" style="text-align: right"> Drug Name :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DName1" placeholder="Enter Drug Name"  ng-model="newOrder.name" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DType1" class="col-lg-3 control-label" style="text-align: right"> Drug Type :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DType1" placeholder="Enter Drug Type"  ng-model="newOrder.type" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="DSupplier" class="col-lg-3 control-label" style="text-align: right"> Supplier Name:</label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="DSupplier" ng-model="newOrder.supplierName" name="snamecombo" ng-required="true">
+
+                                        <option ng-repeat="suppliers in suppliers" >{{suppliers.suplierName}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="DQuentity" class="col-lg-3 control-label" style="text-align: right"> Quantity :</label>
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control" id="DQuentity" placeholder="Enter Quantity" ng-model="newOrder.qty" name="quantity" ng-required="true">
+                                    <span class="help-block" ng-show="orderItemForm.quantity.$dirty && (orderItemForm.quantity.$invalid || orderItemForm.quantity.$error.required)"> Please enter Valid Quantity </span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Ddate" class="col-lg-3 control-label">Date :</label>
+                                <div class="col-lg-6">
+                                <input id="Ddate" type="date"  class="form-control" ng-model="newOrder.date" name="date12" ng-required="true">
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-primary" ng-disabled="supplierForm.$invalid">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

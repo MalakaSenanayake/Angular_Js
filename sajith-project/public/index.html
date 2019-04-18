@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width= device-width initial-scale=1">
+    <title>Heart Beat Pharmacy</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/Inventory.css">
+    <script src="script/angular.js"></script>
+    <script src="script/angular-route.js"></script>
+    <script src="script/ngStorage.js"></script>
+    <script src="script/moment.js"></script>
+    <script src="module/module.js"></script>
+    <script src="controllers/Store-Services/Store-Services/categoryService.js"></script>
+    <script src="controllers/Store-controllers/categoryController.js"></script>
+    <script src="controllers/Store-Services/Store-Services/drugService.js"></script>
+    <script src="controllers/Store-controllers/drugController.js"></script>
+    <script src="controllers/Store-Services/Store-Services/drugBatchService.js"></script>
+    <script src="controllers/Store-controllers/drugBatchController.js"></script>
+    <script src="controllers/Issue-Services/IssueMainService.js"></script>
+    <script src="controllers/Issue-Controllers/issueMainController.js"></script>
+    <script src="controllers/Issue-Services/prescriptionService.js"></script>
+    <script src="controllers/Issue-Controllers/prescriptionController.js"></script>
+    <script src="controllers/purchase-Services/orderItemService.js"></script>
+    <script src="controllers/purchase-Controllers/orderItemController.js"></script>
+    <script src="controllers/purchase-Services/supplier-Service.js"></script>
+    <script src="controllers/purchase-Controllers/supplierController.js"></script>
+
+
+</head>
+<body ng-app="myApp">
+
+    <div class="navbar navbar-inverse navbar-static-top">
+
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+            <a href="#/" class="navbar-brand">Heart Beat Pharmacy</a>
+            <button class="navbar-toggle" data-toggle="collapse" data-target="#navHeaderCollapse" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navHeaderCollapse" ng-controller="logoutCtrl">
+                    <ul class="nav navbar-nav ">
+
+                        <li ><a href="#/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                        <li class="dropdown">
+                            <a  class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list"></span> Dispense<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/despence/PC">Add Prescription</a></li>
+                                <li><a href="#/despence/PT">View Prescriptions</a></li>
+								<li><a href="#/despence/PV">Prescriptions</a></li>
+                                <li><a href="#/despence/ID">Issue Drugs</a></li>
+                                <li><a href="#/despence/IO">View Issue Orders</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a  class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list"></span> Inventory<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/store/AC">Add Category</a></li>
+                                <li><a href="#/store/AD">Add Drug</a></li>
+                                <li><a href="#/store/VD">Drug Details</a></li>
+                                <li><a href="#/store/VDB">Drug Batch Details</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a  class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list"></span> Purchasing<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/purchasing/RS">Register suppliers</a></li>
+                                <li><a href="#/purchasing/PO">Purchase Order</a></li>
+                                <li><a href="#/purchasing/VS">View Suppliers</a></li>
+                                <li><a href="#/purchasing/VO">View Order</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a  ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container-fluid">
+    <div ng-view >
+
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="script/jquery.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</body>
+</html>

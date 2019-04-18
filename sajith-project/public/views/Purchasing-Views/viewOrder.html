@@ -1,0 +1,160 @@
+<div class="container" ng-controller="orderItemController">
+    <div class="col-lg-12">
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                View Order Details
+            </div>
+            <div class="panel-body">
+                <br>
+                <br>
+                <div >
+                    <form class="form-horizontal" name="searchfm" novalidate>
+                        <div class="form-group">
+                            <label for="search" class=" col-lg-2 control-label" style="text-align:right">Search :</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="searchtext.name" id="search" placeholder="Enter Name" name="search1" ng-required="true">
+                                <span class="help-block" ng-show="searchfm.search1.$dirty && (searchfm.search1.$invalid || searchfm.search1.$error.required)"> No Match </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+                <div class="col-lg-offset-1 col-lg-10">
+
+
+                    <div class="orderTableScroll">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Order ID</th>
+                                <th style="text-align: center">Drug ID</th>
+                                <th style="text-align: center">Category Name</th>
+                                <th style="text-align: center">Drug Name</th>
+                                <th style="text-align: center">Drug Type</th>
+                                <th style="text-align: center">Supplier</th>
+                                <th style="text-align: center">Quantity</th>
+                                <th style="text-align: center">Status</th>
+                                <th style="text-align: center">Edit</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="drugOrder in drugOrders | filter:searchtext">
+                                <td>{{drugOrder.oid}}</td>
+                                <td>{{drugOrder.did}}</td>
+                                <td>{{drugOrder.category}}</td>
+                                <td>{{drugOrder.name}}</td>
+                                <td>{{drugOrder.type}}</td>
+                                <td>{{drugOrder.supplierName}}</td>
+                                <td>{{drugOrder.qty}}</td>
+                                <td>{{drugOrder.status}}</td>
+                                <td><button class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit" ng-click="EditOrder(drugOrder.oid)">Edit</button></td>
+                                <td><button class="btn btn-danger" ng-click="Delete(drugOrder.oid)">Delete</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+        </div>
+        <!-- Modal update drug-->
+        <div class="modal fade" id="ModalEdit" role="dialog" >
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Oder Drug Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" name="viewOrder" ng-submit="updateOrder(uOrder.oid,uOrder)">
+                            <div class="form-group">
+                                <label for="OID" class="col-lg-3 control-label" style="text-align: right"> Order ID :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="OID" placeholder="Enter Drug ID"  ng-model="uOrder.oid" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DID" class="col-lg-3 control-label" style="text-align: right"> Drug ID :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DID" placeholder="Enter Drug ID"  ng-model="uOrder.did" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DCate" class="col-lg-3 control-label" style="text-align: right"> Category Name :</label>
+                                <div class="col-lg-6">
+
+                                    <input  type="text" class="form-control" id="DCate"  ng-model="uOrder.category" disabled >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DName" class="col-lg-3 control-label" style="text-align: right"> Drug Name :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DName" placeholder="Enter Drug Name"  ng-model="uOrder.name" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DType" class="col-lg-3 control-label" style="text-align: right"> Drug Type :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DType" placeholder="Enter Drug Type"  ng-model="uOrder.type" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier" class="col-lg-3 control-label" style="text-align: right"> Supplier Name :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="supplier" placeholder="Enter supplier Name"  ng-model="uOrder.supplierName" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="DQuentity" class="col-lg-3 control-label" style="text-align: right"> Quantity :</label>
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control" id="DQuentity" placeholder="Enter Drug Type"  ng-model="uOrder.qty" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Status :</label>
+                                <div class="col-lg-6">
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input id="radiobutton3" name="sampleradiobutton" value="received" type="radio" ng-model="uOrder.status" ng-required="true">Received</label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input id="radiobutton5" name="sampleradiobutton" value="not received" type="radio" ng-model="uOrder.status" ng-required="true">Not Received</label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-primary" ng-disabled="viewOrder.$invalid">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</div>

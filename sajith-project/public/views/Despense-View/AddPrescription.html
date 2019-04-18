@@ -1,0 +1,187 @@
+
+<div class="container" ng-controller="PrescriptionController">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-offset-1 col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Drugs
+                </div>
+                <div class="panel-body">
+                    <div >
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="search" class=" col-lg-2 control-label" style="text-align:right">Search :</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control" ng-model="searchtext.name" id="search" placeholder="Enter Name">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th>Drug ID</th>
+                            <th>Drug Name</th>
+                            <th>Unit Type</th>
+                            <th>Drug Price</th>
+                            <th>Available Quantity</th>
+                            <th>Batch Number</th>
+                            <th>Dosage</th>
+                            <th>Frequency (Number)</th>
+                            <th>Period (No of days)</th>
+                            <th>Select</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="drugs in drugs |filter:searchtext">
+                            <td>{{drugs.did}}</td>
+                            <td>{{drugs.name}}</td>
+                            <td>{{drugs.type}}</td>
+                            <td>{{drugs.price}}</td>
+                            <td>{{drugs.qty}}</td>
+                            <td>{{drugs.batchId}}</td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="drug.dosage"></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="drug.frequency"></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="drug.period"></td>
+                            <td><button class="btn btn-success" ng-click="addItem(drugs.did,drugs.name,drugs.type,drugs.price,drug.dosage,drug.frequency,drug.period)">Add to Cart</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-1 col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Cart
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th>Drug ID</th>
+                            <th>Drug Name</th>
+                            <th>Unit Type</th>
+                            <th>Drug Price</th>
+                            <th>Dosage</th>
+                            <th>Frequency</th>
+                            <th>Period</th>
+                            <th>Remove</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="selectItems in selectItems">
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.drugId" disabled></td>
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.name" disabled></td>
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.type" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.price" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.dosage" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.frequency" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.period" disabled></td>
+                            <td><button class="btn btn-danger" ng-click="removeItem($index)">remove</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary" ng-click="addList()">Add List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Prescription Details</h3>
+                    <br>
+                    <h4>You Must fill all fields</h4>
+                    <br>
+                </div>
+                <div class="panel-body">
+
+                    <form class="form-horizontal" name="PrescriptionMainForm" ng-submit="addPrescription(user)" novalidate>
+
+                        <div class="form-group">
+                            <label for="name" class="col-lg-5 control-label">Doctor Name</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="dname" id="name" ng-model="user.doctorname" placeholder="Enter Doctor Name here" ng-required="true">
+                                <span class="help-block" ng-show="PrescriptionMainForm.dname.$dirty && (PrescriptionMainForm.dname.$invalid || PrescriptionMainForm.dname.$error.required)">Please Enter Doctor Name </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gmail" class="col-lg-5 control-label">Gmail</label>
+                            <div class="col-lg-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">@</span>
+                                    <input type="email" class="form-control" id="gmail" name="pemail" ng-model="user.gmail" placeholder="" ng-required="true">
+                                    <span class="help-block" ng-show="PrescriptionMainForm.pemail.$dirty && (PrescriptionMainForm.pemail.$invalid || PrescriptionMainForm.pemail.$error.required)">Please Enter Gmail </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pname" class="col-lg-5 control-label">Patient ID</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="pname" name="pid" ng-model="user.patientid" placeholder="Enter your Patient ID here " ng-required="true">
+                                <span class="help-block" ng-show="PrescriptionMainForm.pid.$dirty && (PrescriptionMainForm.pid.$invalid || PrescriptionMainForm.pid.$error.required)">Please Enter Patient ID </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-5 control-label">Gender</label>
+                            <div class="col-lg-6">
+                                <div class="radio-inline">
+                                    <label>
+                                        <input id="radiobutton1" name="sampleradiobutton" value="Male" type="radio" ng-model="user.gender" ng-required="true">
+                                        Male</label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input id="radiobutton2" name="sampleradiobutton" value="Female" type="radio" ng-model="user.gender" ng-required="true">
+                                        Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="col-lg-5 control-label">Date</label>
+                            <div class="col-lg-6">
+                                <input type="date" class="form-control" id="date" ng-model="user.date" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ta" class="col-lg-5 control-label">Drug List</label>
+                            <div class="col-lg-6">
+                                <textarea  id="ta" name="dlist" ng-model="user.druglist"  style="min-width: 100%" rows="15" class="form-control" ng-model="user.druglist" ng-required="true" readonly></textarea >
+                                <span class="help-block" ng-show="PrescriptionMainForm.dlist.$dirty && (PrescriptionMainForm.dlist.$invalid || PrescriptionMainForm.dlist.$error.required)">Please Enter Drug List </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-5 control-label">Complete by Cheaf Pharamacist </label>
+                            <div class="col-lg-6">
+                                <div class="radio-inline">
+                                    <label>
+                                        <input id="radiobutton3" name="sampleradiobutton1" value="complete" type="radio" ng-model="user.status" ng-required="true">Complete</label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input id="radiobutton4" name="sampleradiobutton1" value="not complete" type="radio" ng-model="user.status" ng-required="true">Not Complete</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success"  ng-disabled="PrescriptionMainForm.$invalid" type="submit">Submit</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

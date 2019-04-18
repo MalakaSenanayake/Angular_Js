@@ -1,0 +1,62 @@
+<div class="container" ng-controller="DrugController">
+    <br>
+    <br>
+    <div class="col-lg-offset-1 col-lg-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Add Drug details
+            </div>
+            <div class="panel-body">
+                <br>
+                <br>
+                <div class="col-lg-offset-3 col-lg-6">
+
+                <form class="form-horizontal" ng-submit="addDrug(drug)" name="drugForm" novalidate>
+
+                    <div class="form-group">
+
+                        <label for="DCate" class=" control-label" style="text-align: right"> Drug Category :</label>
+                        <select class="form-control" id="DCate" name="dcate" ng-model="drug.category" ng-required="true">
+
+                                <option ng-repeat="category in category" >{{category.name}}</option>
+
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label for="DName" class=" control-label" style="text-align: right"> Drug Name :</label>
+                        <input type="text" class="form-control" id="DName" name="dname" placeholder="Enter Drug Name" ng-model="drug.name" ng-required="true">
+                        <span class="help-block" ng-show="drugForm.dname.$dirty && (drugForm.dname.$invalid || drugForm.dname.$error.required)"> Please enter drug Name </span>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label for="DType" class=" control-label" style="text-align: right"> Drug Type :</label>
+                       <!-- <input type="text" class="form-control" id="DType" placeholder="Enter Drug Type" ng-model="drug.type" ng-required="true">-->
+                        <select class="form-control" id="DType" ng-model="drug.type" ng-required="true">
+                            <option>Type1</option>
+                            <option>Type2</option>
+                            <option>Type3</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label for="DPrice" class=" control-label" style="text-align: right"> Unit Price :</label>
+                        <input type="number" class="form-control" id="DPrice" name="dprice" placeholder="Enter Unit Price" ng-model="drug.price" ng-required="true">
+                        <span class="help-block" ng-show="drugForm.dprice.$dirty && (drugForm.dprice.$invalid || drugForm.dprice.$error.required)"> Please enter unit price </span>
+
+                    </div>
+
+                        <button type="submit" class="btn btn-success" ng-disabled="drugForm.$invalid">Add Drug</button>
+
+                </form>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+
+    </div>
+</div>

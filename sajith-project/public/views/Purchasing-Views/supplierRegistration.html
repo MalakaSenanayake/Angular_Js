@@ -1,0 +1,101 @@
+<div class="container" ng-controller="SupplierController">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Supplier Registration Form</h3>
+    </div>
+	
+	
+    <div class="panel-body">
+        <form class="form-horizontal" role="form" name="supplierForm" ng-submit="addSupplier(supplier)" novalidate>
+		
+            <div class="form-group">
+                <label for="companyname" class="col-sm-4 control-label">Company Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="companyname" name="companyname" ng-model="supplier.comName" placeholder="Enter Company Name here" ng-required="true">
+                    <span class="help-block" ng-show="supplierForm.companyname.$dirty && (supplierForm.companyname.$invalid || supplierForm.companyname.$error.required)"> Please enter Company Name </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="CompanyAddress" class="col-sm-4 control-label">Company Address</label>
+                <div class="col-sm-4">
+                    <textarea name="ac" cols="" rows="" class="form-control" id="CompanyAddress" ng-model="supplier.comAddress" name="caddress" ng-required="true"></textarea>
+                    <span class="help-block" ng-show="supplierForm.ac.$dirty && (supplierForm.ac.$invalid || supplierForm.ac.$error.required)"> Please enter Company Address </span>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Companymail" class="col-sm-4 control-label">Company E-mail</label>
+                <div class="col-sm-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">@</span>
+                        <input type="email" class="form-control" id="Companymail" ng-model="supplier.comMail" placeholder="" name="cemail" ng-required="true">
+                        <span class="help-block" ng-show="supplierForm.cemail.$dirty && (supplierForm.cemail.$invalid || supplierForm.cemail.$error.required)"> Please enter Valid Email </span>
+                    </div>
+                </div>
+            </div>
+            
+			<div class="form-group">
+                <label for="TelephoneNumber" class="col-sm-4 control-label">Telephone Number</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" id="TelephoneNumber" ng-model="supplier.comTel" placeholder="Enter Telephone Number here" name="ctel" ng-required="true">
+                </div>
+            </div>
+           
+
+
+            <div class="form-group">
+                <label for="SupplierName" class="col-sm-4 control-label">Supplier Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="SupplierName" ng-model="supplier.suplierName" placeholder="Enter Supplier Name here" name="sname" ng-required="true">
+                    <span class="help-block" ng-show="supplierForm.sname.$dirty && (supplierForm.sname.$invalid || supplierForm.sname.$error.required)"> Please enter Supplier Name </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Suppliermail" class="col-sm-4 control-label">Supplier E-mail</label>
+                <div class="col-sm-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">@</span>
+                        <input type="email" class="form-control" placeholder="" id="Suppliermail" ng-model="supplier.supMail" name="smail" ng-required="true">
+                        <span class="help-block" ng-show="supplierForm.smail.$dirty && (supplierForm.smail.$invalid || supplierForm.smail.$error.required)"> Please enter Valid Email </span>
+                    </div>
+                </div>
+            </div>
+            
+			<div class="form-group">
+                <label for="MobileNumber" class="col-sm-4 control-label">Mobile Number</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" id="MobileNumber" ng-model="supplier.SupMobile" placeholder="Enter Mobile Number here" name="smobile" ng-required="true">
+                </div>
+            </div>
+
+			<div class="form-group">
+                <label for="date" class="col-sm-4 control-label">Date</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="date" ng-model="supplier.date" name="cname" ng-required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+
+                    <button  type="submit" class="btn btn-success btn-sm subbutton" ng-disabled="supplierForm.$invalid">Submit</button>
+
+                </div>
+            </div>
+
+
+
+	
+            
+        </form>
+    </div>
+    <div class="panel-footer panel-lg" style="overflow:hidden;text-align:right;">
+
+    </div>
+</div>
+
+
+
+</div>

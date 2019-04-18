@@ -1,0 +1,11 @@
+.categoryTableScroll{
+
+    height: 300px;
+    overflow: scroll;
+}
+
+.drugTableScroll{
+
+    height: 350px;
+    overflow: scroll;
+}

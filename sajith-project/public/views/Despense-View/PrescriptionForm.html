@@ -1,0 +1,76 @@
+<div class="container" ng-controller="PrescriptionController">
+
+    <div class="col-lg-offset-10">
+        <button class="btn btn-success" ng-click="printpage()">Print Page</button>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-offset-3 col-lg-6">
+            <div>
+                <form>
+                    <div class="form-group">
+                        <label for="spresid" class="control-label">Search Prescription</label>
+                        <input class="form-control" id="spresid" type="tesxt" ng-model="search.presid" placeholder="Enter Prescription Id ">
+                        <br>
+                        <button class="btn btn-success" ng-click="getPrescription(search.presid)">Search</button>
+                    </div>
+
+                </form>
+            </div>
+<form  name="PrescriptionViewForm">
+
+    <div class="form-group">
+        <label for="name" class="control-label">Doctor Name</label>
+        <input type="text" class="form-control" name="dname" id="name" ng-model="VPrescription.doctorname" placeholder="Enter Doctor Name here" ng-required="true" disabled>
+    </div>
+    <div class="form-group">
+        <label for="gmail" class="control-label">Gmail</label>
+        <div class="input-group input-group-sm">
+                <span class="input-group-addon">@</span>
+                <input type="email" class="form-control" id="gmail" name="pemail" ng-model="VPrescription.gmail" placeholder="" ng-required="true" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="pname" class=" control-label">Patient ID</label>
+        <input type="text" class="form-control" id="pname" name="pid" ng-model="VPrescription.patientid" placeholder="Enter your Patient ID here " ng-required="true" disabled>Please Enter Patient ID </span>
+    </div>
+    <div class="form-group">
+        <label class=" control-label">Gender</label>
+
+            <div class="radio-inline">
+                <label>
+                    <input id="radiobutton1" name="sampleradiobutton" value="Male" type="radio" ng-model="VPrescription.gender" ng-required="true" disabled>
+                    Male</label>
+            </div>
+            <div class="radio-inline">
+                <label>
+                    <input id="radiobutton2" name="sampleradiobutton" value="Female" type="radio" ng-model="VPrescription.gender" ng-required="true" disabled>
+                    Female</label>
+            </div>
+
+    </div>
+    <div class="form-group">
+        <label for="date" class="control-label">Date</label>
+        <input type="text" class="form-control" id="date" ng-model="VPrescription.date" ng-required="true" disabled>
+    </div>
+    <div class="form-group">
+        <label for="ta" class=" control-label">Drug List</label>
+        <textarea  id="ta" name="dlist"   style="min-width: 100%" rows="15" class="form-control" ng-model="VPrescription.druglist"  readonly disabled></textarea >
+    </div>
+    <div class="form-group">
+        <label class=" control-label">Complete by Cheaf Pharamacist </label>
+        <div class="radio-inline">
+                <label>
+                    <input id="radiobutton3" name="sampleradiobutton1" value="complete" type="radio" ng-model="VPrescription.status" ng-required="true" disabled>Complete</label>
+        </div>
+        <div class="radio-inline">
+                <label>
+                    <input id="radiobutton4" name="sampleradiobutton1" value="not complete" type="radio" ng-model="VPrescription.status" ng-required="true" disabled>Not Complete</label>
+        </div>
+    </div>
+
+
+</form>
+        </div>
+    </div>
+</div>

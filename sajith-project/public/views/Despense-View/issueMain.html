@@ -1,0 +1,155 @@
+
+<div class="container" ng-controller="IssueMainController">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Drugs
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th>Drug ID</th>
+                            <th>Drug Name</th>
+                            <th>Unit Type</th>
+                            <th>Drug Price</th>
+                            <th>Batch Id</th>
+                            <th>Available Quantity</th>
+                            <th>Issuing Quantity</th>
+                            <th>Select</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="drugs in drugs">
+                            <td>{{drugs.did}}</td>
+                            <td>{{drugs.name}}</td>
+                            <td>{{drugs.type}}</td>
+                            <td>{{drugs.price}}</td>
+                            <td>{{drugs.batchId}}</td>
+                            <td>{{drugs.qty}}</td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="drug.issueQuantity"></td>
+                            <td><button class="btn btn-success" ng-click="addItem(drugs.did,drugs.name,drugs.type,drugs.price,drugs.batchId,drugs.qty,drug.issueQuantity)">Add to Cart</button></td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Cart
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+
+                            <th>Drug ID</th>
+                            <th>Drug Name</th>
+                            <th>Unit Type</th>
+                            <th>Drug Price</th>
+                            <th>Batch Id</th>
+                            <th>Issuing Quantity</th>
+                            <th>Total Price</th>
+                            <th>Remove</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="selectItems in selectItems">
+
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.drugId" disabled></td>
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.name" disabled></td>
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.type" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.price" disabled></td>
+                            <td><input type="text" class="form-control col-lg-4" ng-model="selectItems.batchId" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.quantity" disabled></td>
+                            <td><input type="number" class="form-control col-lg-4" ng-model="selectItems.totalPrice" disabled></td>
+                            <td><button class="btn btn-danger" ng-click="removeItem($index)">remove</button></td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                    <button class="btn btn-primary" ng-click="addList()">Add List</button>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Drug Issuing Details</h3>
+                    <br>
+                    <h4>You Must fill all fields</h4>
+                    <br>
+
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-offset-1 col-lg-10">
+                        <form class="form-horizontal" name="IssueMainForm" ng-submit="addOrder(user)" novalidate>
+                            <div class="form-group">
+                                <label for="patientid">Select Patient ID :</label>
+                                <input class="form-control" type="text" name="patientid" id="patientid" ng-model="user.patientid" ng-required="true">
+                                <span class="help-block" ng-show="IssueMainForm.patientid.$dirty && (IssueMainForm.patientid.$invalid || IssueMainForm.patientid.$error.required)">Please Enter Patient ID </span>
+
+
+                            </div>
+                            <div class="form-group">
+                                <label for="presid">Select Prescription ID :</label>
+                                <input class="form-control" type="text" name="presid" id="presid" ng-model="user.prescriptionid" ng-required="true">
+                                <span class="help-block" ng-show="IssueMainForm.presid.$dirty && (IssueMainForm.presid.$invalid || IssueMainForm.presid.$error.required)">Please Enter Prescription ID </span>
+
+
+                            </div>
+                            <div class="form-group">
+                                <label for="dname">Doctor Name :</label>
+                                <input class="form-control" name="dname" type="text" id="dname" ng-model="user.doctorname" ng-required="true" >
+                                <span class="help-block" ng-show="IssueMainForm.dname.$dirty && (IssueMainForm.dname.$invalid || IssueMainForm.dname.$error.required)">Please Enter Doctor Name </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email :</label>
+                                <input class="form-control" name="email" type="email" id="email" ng-model="user.gmail" ng-required="true">
+                                <span class="help-block" ng-show="IssueMainForm.email.$dirty && (IssueMainForm.email.$invalid || IssueMainForm.email.$error.required)">Please Enter Email </span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date">Date :</label>
+                                <input id="date" type="date"  class="form-control" ng-model="user.date" ng-required="true">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ta">Drug List :</label>
+                                <textarea  id="ta" ng-model="user.druglist"  style="min-width: 100%" rows="15" class="form-control" ng-required="true" readonly></textarea>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="tprice">Total Price :</label>
+                                <input class="form-control" type="number" id="tprice" name="tprice" ng-model="user.totalPrice" ng-required="true">
+                                <span class="help-block" ng-show="IssueMainForm.tprice.$dirty && (IssueMainForm.tprice.$invalid || IssueMainForm.tprice.$error.required)">Please Enter Total Price </span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label><b>Payment</b></label><br>
+                                <label class="radio-inline"><input type="radio" ng-model="user.payment" value="Recieved" name="optradio" ng-required="true">Recieved</label>
+                                <label class="radio-inline"><input type="radio"ng-model="user.payment" value="Not Recieved" name="optradio" ng-required="true">Not Recieved</label>
+                            </div>
+
+                            <button class="btn btn-success" ng-disabled="IssueMainForm.$invalid" type="submit">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

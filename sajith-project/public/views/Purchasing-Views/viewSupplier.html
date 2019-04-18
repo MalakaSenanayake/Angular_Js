@@ -1,0 +1,196 @@
+<div class="container-fluid" ng-controller="SupplierController">
+
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                View Supplier details
+            </div>
+            <div class="panel-body">
+                <br>
+                <br>
+                <div >
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="search" class=" col-lg-2 control-label" style="text-align:right">Search Supplier :</label>
+                            <div class="col-lg-6">
+                                <input id="search" type="text" class="form-control" ng-model="searchtext.suplierName">
+                               <!-- <select class="form-control" id="search" ng-model="searchtext.suplierName" >
+                                    <option ng-repeat="suppliers in suppliers" >{{suppliers.suplierName}}</option>
+                                </select>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+                <div class=" col-lg-12">
+
+
+                    <div class="supplierTableScroll">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Supplier ID</th>
+                                <th style="text-align: center">Company Name</th>
+                                <th style="text-align: center">Company Address</th>
+                                <th style="text-align: center">Company Email</th>
+                                <th style="text-align: center">Company phoneNo</th>
+                                <th style="text-align: center">Supplier Name</th>
+                                <th style="text-align: center">Supplier Email</th>
+                                <th style="text-align: center">Supplier phonNo</th>
+                                <th style="text-align: center">Date </th>
+                                <th style="text-align: center">Edit</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <tr ng-repeat="suppliers in suppliers | filter:searchtext">
+                                <td>{{suppliers.suppid}}</td>
+                                <td>{{suppliers.comName}}</td>
+                                <td>{{suppliers.comAddress}}</td>
+                                <td>{{suppliers.comMail}}</td>
+                                <td>{{suppliers.comTel}}</td>
+                                <td>{{suppliers.suplierName}}</td>
+                                <td>{{suppliers.supMail}}</td>
+                                <td>{{suppliers.SupMobile}}</td>
+                                <td>{{suppliers.date |date:YYYY-MM-dd}}</td>
+                                <td><button class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit" ng-click="Edit(suppliers.suppid)">Edit</button></td>
+                                <td><button class="btn btn-danger" ng-click="Delete(suppliers.suppid)">Delete</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+        </div>
+        <!-- Modal update drug-->
+        <div class="modal fade" id="ModalEdit" role="dialog" >
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Supplier Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+
+                        <form class="form-horizontal" name="viewSupplierUform" ng-submit="UpdateSupplier(Usupplier.suppid,Usupplier)" novalidate>
+
+                                    <div class="form-group">
+                                        <label for="supid" class="col-sm-4 control-label">Supplier ID</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="supid" ng-model="Usupplier.suppid"placeholder="Enter Supplier ID here" disabled>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="companyname" class="col-sm-4 control-label">Company Name</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="companyname" ng-model="Usupplier.comName" placeholder="Enter Company Name here" name="cname1" ng-required="true">
+                                            <span class="help-block" ng-show="viewSupplierUform.cname1.$dirty && (viewSupplierUform.cname1.$invalid || viewSupplierUform.cname1.$error.required)"> Please enter Company Name </span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="CompanyAddress" class="col-sm-4 control-label">Company Address</label>
+                                        <div class="col-lg-6">
+                                            <textarea name="ab" cols="" rows="" class="form-control" id="CompanyAddress" ng-model="Usupplier.comAddress" name="caddress1" ng-required="true"></textarea>
+                                            <span class="help-block" ng-show="viewSupplierUform.ab.$dirty && (viewSupplierUform.ab.$invalid || viewSupplierUform.ab.$error.required)"> Please enter Company Address </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Companymail" class="col-sm-4 control-label">Company E-mail</label>
+                                        <div class="col-lg-6">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">@</span>
+                                                <input type="email" class="form-control" id="Companymail" placeholder="" ng-model="Usupplier.comMail" name="cemail1" ng-required="true">
+                                                <span class="help-block" ng-show="viewSupplierUform.comMail.$dirty && (viewSupplierUform.comMail.$invalid || viewSupplierUform.comMail.$error.required)"> Please enter Valid Email </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="TelephoneNumber" class="col-sm-4 control-label">Telephone Number</label>
+                                        <div class="col-lg-6">
+                                            <input type="number" class="form-control" id="TelephoneNumber" ng-model="Usupplier.comTel" placeholder="Enter Telephone Number here" name="ctel1" ng-required="true">
+                                            <span class="help-block" ng-show="viewSupplierUform.ctel1.$dirty && (viewSupplierUform.ctel1.$invalid || viewSupplierUform.ctel1.$error.required)"> Please enter valid Phone Number</span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label for="SupplierName" class="col-sm-4 control-label">Supplier Name</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="SupplierName" ng-model="Usupplier.suplierName" placeholder="Enter Supplier Name here" name="sname1" ng-required="true">
+                                            <span class="help-block" ng-show="viewSupplierUform.sname1.$dirty && (viewSupplierUform.sname1.$invalid || viewSupplierUform.sname1.$error.required)"> Please enter Supplier Name</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Suppliermail" class="col-sm-4 control-label">Supplier E-mail</label>
+                                        <div class="col-lg-6">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">@</span>
+                                                <input type="email" class="form-control" placeholder="" id="Suppliermail" ng-model="Usupplier.supMail" name="semail1" ng-required="true">
+                                                <span class="help-block" ng-show="viewSupplierUform.semail1.$dirty && (viewSupplierUform.semail1.$invalid || viewSupplierUform.semail1.$error.required)"> Please enter valid E-mail</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="MobileNumber" class="col-sm-4 control-label">Mobile Number</label>
+                                        <div class="col-lg-6">
+                                            <input type="number" class="form-control" id="MobileNumber"  ng-model="Usupplier.SupMobile" placeholder="Enter Mobile Number here" name="smobile1" ng-required="true">
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label for="date" class="col-sm-4 control-label">Date</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="date" value="{{Usupplier.date|date:'YYYY/MM/dd'}}" ng-model="Usupplier.date" name="sdate1" ng-required="true" disabled>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-primary" ng-disabled="supplierForm.$invalid">Save</button>
+                                 </div>
+                        </form>
+
+
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+        </div>
+
+</div>

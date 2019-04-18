@@ -1,0 +1,223 @@
+<div class="container" ng-controller="DrugController">
+    <div class="col-lg-12">
+<!--drug table-->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                View Drug details
+            </div>
+            <div class="panel-body">
+                <br>
+                <br>
+                <div >
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="search" class=" col-lg-2 control-label" style="text-align:right">Search :</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="searchtext.name" id="search" placeholder="Enter Drug Name">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+                <div class="col-lg-offset-1 col-lg-10">
+
+
+                    <div class="drugTableScroll">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Drug ID</th>
+                                <th style="text-align: center">Category Name</th>
+                                <th style="text-align: center">Drug Name</th>
+                                <th style="text-align: center">Drug Type</th>
+                                <th style="text-align: center">Unit Price</th>
+                                <th style="text-align: center">Add New Batch</th>
+                                <th style="text-align: center">Edit</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="drug in drugs | filter:searchtext">
+                                <td>{{drug.did}}</td>
+                                <td>{{drug.category}}</td>
+                                <td>{{drug.name}}</td>
+                                <td>{{drug.type}}</td>
+                                <td>{{drug.price}}</td>
+                                <td><button class="btn btn-primary" data-toggle="modal" data-target="#ModalAddnewBatch" ng-click="Edit(drug.did)">Add New Batch</button></td>
+                                <td><button class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit" ng-click="Edit(drug.did)">Edit</button></td>
+                                <td><button class="btn btn-danger" ng-click="Delete(drug.did)">Delete</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+        </div>
+
+        <!-- Modal update drug-->
+        <div class="modal fade" id="ModalEdit" role="dialog" >
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Drug Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+
+                        <form class="form-horizontal" ng-submit="UpdateDrug(udrug.did,udrug)" name="drugUpdateForm" novalidate>
+                            <div class="form-group">
+                                <label for="DID" class="col-lg-3 control-label" style="text-align: right"> Drug ID :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DID" placeholder="Enter Drug ID"  ng-model="udrug.did" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DCate" class="col-lg-3 control-label" style="text-align: right"> Drug Category :</label>
+                                <div class="col-lg-6">
+                                   <!-- <input  type="text" class="form-control" id="DCate"  ng-model="udrug.category" >-->
+                                    <select class="form-control" id="DCate" name="dcate" ng-model="udrug.category" ng-required="true">
+
+                                        <option ng-repeat="category in category" >{{category.name}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DName" class="col-lg-3 control-label" style="text-align: right"> Drug Name :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DName" placeholder="Enter Drug Name"  ng-model="udrug.name" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DType" class="col-lg-3 control-label" style="text-align: right"> Drug Type :</label>
+                                <div class="col-lg-6">
+                                   <!-- <input type="text" class="form-control" id="DType" placeholder="Enter Drug Type"  ng-model="udrug.type">-->
+                                    <select class="form-control" id="DType" ng-model="udrug.type" ng-required="true">
+                                        <option>Type1</option>
+                                        <option>Type2</option>
+                                        <option>Type3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DPrice" class="col-lg-3 control-label" style="text-align: right"> Unit Price :</label>
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control" id="DPrice" placeholder="Enter Unit Price"  ng-model="udrug.price" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-primary" ng-disabled="drugUpdateForm.$invalid">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- model add new batch -->
+        <div class="modal fade" id="ModalAddnewBatch" role="dialog" >
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add New Batch</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <form class="form-horizontal" ng-submit="addNewBatch(newBatch)" name="newBatchForm" novalidate>
+                            <div class="form-group">
+                                <label for="DID1" class="col-lg-4 control-label" style="text-align: right"> Drug ID :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DID1" placeholder="Enter Drug ID"  ng-model="newBatch.did" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DCate1" class="col-lg-4 control-label" style="text-align: right"> Drug Category :</label>
+                                <div class="col-lg-6">
+                                    <input  type="text" class="form-control" id="DCate1"  ng-model="newBatch.category" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DName1" class="col-lg-4 control-label" style="text-align: right"> Drug Name :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DName1" placeholder="Enter Drug Name"  ng-model="newBatch.name" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DType1" class="col-lg-4 control-label" style="text-align: right"> Drug Type :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DType1" placeholder="Enter Drug Type"  ng-model="newBatch.type" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DPrice1" class="col-lg-4 control-label" style="text-align: right"> Unit Price :</label>
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control" id="DPrice1" placeholder="Enter Unit Price"  ng-model="newBatch.price" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Dbatch" class="col-lg-4 control-label" style="text-align: right"> Batch ID :</label>
+                                <div class="col-lg-6">
+                                    <input  type="text" class="form-control" id="Dbatch" placeholder="Enter Batch Id"  ng-model="newBatch.batchId" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DMdate" class="col-lg-4 control-label" style="text-align: right"> Manufacture Date :</label>
+                                <div class="col-lg-6">
+                                    <input  type="date" class="form-control" id="DMdate"  ng-model="newBatch.mDate" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DEdate" class="col-lg-4 control-label" style="text-align: right"> Expire Date :</label>
+                                <div class="col-lg-6">
+                                    <input  type="date" class="form-control" id="DEdate"    ng-model="newBatch.eDate" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Dqty" class="col-lg-4 control-label" style="text-align: right"> Quantity :</label>
+                                <div class="col-lg-6">
+                                    <input  type="number" class="form-control" id="Dqty" placeholder="Enter Quantity"  ng-model="newBatch.qty" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-primary" ng-disabled="newBatchForm.$invalid">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

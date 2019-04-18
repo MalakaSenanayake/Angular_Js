@@ -1,0 +1,173 @@
+<div class="container" ng-controller="DrugBatchController">
+    <div class="col-lg-12">
+<!--drug batch table-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                View Drug Batch details
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-offset-10">
+                    <button class="btn btn-success" ng-click="printPage()">print</button>
+                </div>
+                <br>
+                <br>
+                <div >
+                    <form class="form-horizontal" name="searchFrom" novalidate>
+                        <div class="form-group">
+                            <label for="searchbyname" class=" col-lg-3 control-label" style="text-align:right">Search By Drug Name :</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" name="sname" ng-model="searchtext1.name" id="searchbyname" placeholder="Enter Name" ng-required="true">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="searchbybatchId" class=" col-lg-3 control-label" style="text-align:right">Search By Batch Id :</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="searchtext2.batchId" id="searchbybatchId" ng-disabled="searchFrom.$invalid" placeholder="Enter Batch Id">
+                                <span class="help-block">first enter drug name to search batch</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="search" class=" col-lg-3 control-label" style="text-align:right">Search Monthly Expire Drugs :</label>
+                            <div class="col-lg-3">
+                                <input type="month" class="form-control" ng-model="searchtext3.eDate" id="search" >
+                            </div>
+                        </div>
+                        <br>
+
+                    </form>
+                </div>
+                <br>
+
+                <div class="col-lg-12">
+
+
+                    <div class="drugTableScroll">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Drug ID</th>
+                                <th style="text-align: center">Category Name</th>
+                                <th style="text-align: center">Drug Name</th>
+                                <th style="text-align: center">Drug Type</th>
+                                <th style="text-align: center">Unit Price</th>
+                                <th style="text-align: center">Batch</th>
+                                <th style="text-align: center">Manufacture Date</th>
+                                <th style="text-align: center">Expire Date</th>
+                                <th style="text-align: center">Quantity</th>
+                                <th style="text-align: center">Edit</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="db in drugBatchs | filter:searchtext1| filter:searchtext2 | filter:searchtext3">
+                                <td>{{db.did}}</td>
+                                <td>{{db.category}}</td>
+                                <td>{{db.name}}</td>
+                                <td>{{db.type}}</td>
+                                <td>{{db.price}}</td>
+                                <td>{{db.batchId}}</td>
+                                <td>{{db.mDate | date:'yyyy-MM-dd'}}</td>
+                                <td>{{db.eDate | date:'yyyy-MM-dd'}}</td>
+                                <td>{{db.qty}}</td>
+                                <td><button class="btn btn-warning" data-toggle="modal" data-target="#ModalAddnewBatch" ng-click="Edit(db.did,db.batchId)">Edit</button></td>
+                                <td><button class="btn btn-danger" ng-click="Delete(db.did,db.batchId)">Delete</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+        </div>
+
+        <!-- batch update Modal-->
+        <div class="modal fade" id="ModalAddnewBatch" role="dialog" >
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Batch</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" ng-submit="updateBatch(uBatch.did,uBatch.batchId,uBatch)" name="updateForm" novalidate>
+                            <div class="form-group">
+                                <label for="DID1" class="col-lg-3 control-label" style="text-align: right"> Drug ID :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DID1" placeholder="Enter Drug ID"  ng-model="uBatch.did" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DCate1" class="col-lg-3 control-label" style="text-align: right"> Drug Category :</label>
+                                <div class="col-lg-6">
+                                    <input  type="text" class="form-control" id="DCate1"  ng-model="uBatch.category" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DName1" class="col-lg-3 control-label" style="text-align: right"> Drug Name :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DName1" placeholder="Enter Drug Name"  ng-model="uBatch.name" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DType1" class="col-lg-3 control-label" style="text-align: right"> Drug Type :</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="DType1" placeholder="Enter Drug Type"  ng-model="uBatch.type" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DPrice1" class="col-lg-3 control-label" style="text-align: right"> Unit Price :</label>
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control" id="DPrice1" placeholder="Enter Unit Price"  ng-model="uBatch.price" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Dbatch" class="col-lg-3 control-label" style="text-align: right"> Batch ID :</label>
+                                <div class="col-lg-6">
+                                    <input  type="text" class="form-control" id="Dbatch"  ng-model="uBatch.batchId" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DMdate" class="col-lg-3 control-label" style="text-align: right" > Manufacture Date :</label>
+                                <div class="col-lg-6">
+                                    <input  type="date" class="form-control"  id="DMdate"  ng-model="uBatch.mDate" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DEdate" class="col-lg-3 control-label" style="text-align: right" > Expire Date :</label>
+                                <div class="col-lg-6">
+                                    <input  type="date" class="form-control" id="DEdate"  ng-model="uBatch.eDate" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Dqty" class="col-lg-3 control-label" style="text-align: right" > Quantity :</label>
+                                <div class="col-lg-6">
+                                    <input  type="number" class="form-control" id="Dqty"  ng-model="uBatch.qty" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-primary" ng-disabled="updateForm.$invalid">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+
+
+                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
